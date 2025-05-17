@@ -227,6 +227,76 @@
             margin-bottom: 1rem;
         }
         
+        /* Projects Scrollable Section */
+        .projects-container {
+            display: flex;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 1rem 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-color) var(--light-bg);
+            -webkit-overflow-scrolling: touch; /* For smooth scrolling on iOS */
+            scroll-snap-type: x mandatory;
+            gap: 2rem;
+        }
+
+        .projects-container::-webkit-scrollbar {
+            height: 8px;
+        }
+
+        .projects-container::-webkit-scrollbar-track {
+            background: var(--light-bg);
+            border-radius: 4px;
+        }
+
+        .projects-container::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 4px;
+        }
+
+        .project-card {
+            flex: 0 0 calc(33.333% - 1.34rem);
+            min-width: 300px;
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 300px;
+            scroll-snap-align: start;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .scroll-controls {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+        
+        .scroll-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .scroll-btn:hover {
+            background-color: var(--secondary-color);
+        }
+        
         /* Education Section */
         .education-section {
             margin-top: 3rem;
@@ -391,6 +461,10 @@
             
             .profile-image, .profile-details {
                 min-height: auto;
+            }
+            
+            .project-card {
+                flex: 0 0 calc(100% - 2rem);
             }
         }
         
@@ -580,29 +654,37 @@
         
         <section id="projects" style="margin-top: 3rem;">
             <h2 class="section-title">Projects & Certifications</h2>
-            <div class="services-container">
-                <div class="service-card">
+            <div class="scroll-controls">
+                <button class="scroll-btn scroll-left" aria-label="Scroll left">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="scroll-btn scroll-right" aria-label="Scroll right">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="projects-container">
+                <div class="project-card">
                     <div class="service-icon">
                         <i class="fas fa-certificate"></i>
                     </div>
                     <h3 class="service-title">CS50: Introduction to Computer Science</h3>
                     <p>Currently undertaking Harvard University's renowned CS50 introduction to computer science course. This comprehensive program is helping me build a strong foundation in programming concepts, algorithms, data structures, and software engineering principles. The practical assignments and projects are enhancing my problem-solving abilities and coding skills across multiple programming languages.</p>
                 </div>
-                <div class="service-card">
+                <div class="project-card">
                     <div class="service-icon">
                         <i class="fab fa-js"></i>
                     </div>
                     <h3 class="service-title">JavaScript Certification</h3>
                     <p>Expanding my programming knowledge through a comprehensive JavaScript certification course. This program covers essential web development concepts including DOM manipulation, asynchronous programming, and modern JavaScript frameworks. By the end of this certification, I aim to build interactive web applications with clean, efficient code that delivers exceptional user experiences across different devices and platforms.</p>
                 </div>
-                <div class="service-card">
+                <div class="project-card">
                     <div class="service-icon">
                         <i class="fas fa-robot"></i>
                     </div>
                     <h3 class="service-title">ForgeAI (Planned)</h3>
                     <p>An innovative productivity application leveraging artificial intelligence to help students manage their study schedules and optimize learning. This project aims to analyze individual learning patterns and preferences to create personalized study plans that maximize retention and understanding. Features will include smart reminders, adaptive quizzing, and progress tracking to support students in achieving their academic goals efficiently.</p>
                 </div>
-                <div class="service-card">
+                <div class="project-card">
                     <div class="service-icon">
                         <i class="fas fa-gamepad"></i>
                     </div>
@@ -661,10 +743,30 @@
             });
         });
         
+        // Projects horizontal scroll functionality
+        const scrollContainer = document.querySelector('.projects-container');
+        const scrollLeftBtn = document.querySelector('.scroll-left');
+        const scrollRightBtn = document.querySelector('.scroll-right');
+        const cardWidth = scrollContainer.querySelector('.project-card').offsetWidth + 32; // 32px is the gap
+        
+        scrollLeftBtn.addEventListener('click', () => {
+            scrollContainer.scrollBy({
+                left: -cardWidth,
+                behavior: 'smooth'
+            });
+        });
+        
+        scrollRightBtn.addEventListener('click', () => {
+            scrollContainer.scrollBy({
+                left: cardWidth,
+                behavior: 'smooth'
+            });
+        });
+        
         // Form submission placeholder
         document.querySelector('.contact-form').addEventListener('submit', function(e) {
             e.preventDefault();
-            alert('Thank you for your message! This is a demo form. On a live site, this would send your message to the site owner.');
+            alert('Thank you for your message!');
         });
         
         // Add active class to sidebar icon when scrolling to corresponding section
@@ -689,4 +791,4 @@
         });
     </script>
 </body>
-  </html>
+    </html>
