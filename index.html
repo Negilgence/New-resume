@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #FF8C42;
+            --secondary-color: #FFA062;
+            --accent-color: #FF8C42;
+            --light-bg: #f8f9fa;
+            --dark-bg: #333;
+            --text-color: #333;
+            --light-text: #f8f9fa;
+            --card-bg: #ffffff;
+            --sidebar-width: 70px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--light-bg);
+            color: var(--text-color);
+            line-height: 1.6;
+            display: flex;
+        }
+        
+        /* Sidebar Navigation */
+        .sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
+            background-color: var(--dark-bg);
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 0;
+            z-index: 100;
+        }
+        
+        .sidebar-icon {
+            color: var(--light-text);
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            padding: 0.5rem;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar-icon:hover, .sidebar-icon.active {
+            background-color: var(--primary-color);
+        }
+        
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: var(--sidebar-width);
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 0 var(--sidebar-width);
+        }
+        
+        /* Profile Card */
+        .profile-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            display: flex;
+            margin-bottom: 2rem;
+        }
+        
+        .profile-image {
+            flex: 1;
+            background-color: #e9ecef;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 400px;
+        }
+        
+        .profile-image img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+        
+        .profile-name {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .profile-title {
+            color: #6c757d;
+            margin-bottom: 1rem;
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .profile-details {
+            flex: 1.5;
+            padding: 2rem;
+        }
+        
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 0.5rem;
+        }
+        
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background-color: var(--primary-color);
+            border-radius: 2px;
+        }
+        
+        .info-row {
+            display: flex;
+            margin-bottom: 0.5rem;
+            align-items: center;
+        }
+        
+        .info-label {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 15px;
+            margin-right: 1rem;
+            font-size: 0.9rem;
+        }
+        
+        .available-status {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Services Section */
+        .services-section {
+            margin-top: 2rem;
+        }
+        
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .service-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            min-height: 220px;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(76, 175, 80, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            font-size: 1.5rem;
+        }
+        
+        .service-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        /* Education Section */
+        .education-section {
+            margin-top: 3rem;
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background-color: #e9ecef;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            border: 3px solid var(--light-bg);
+        }
+        
+        .timeline-date {
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-bottom: 0.5rem;
+        }
+        
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Skills Section */
+        .skills-section {
+            margin-top: 3rem;
+        }
+        
+        .skills-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .skill-category {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .skill-category h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #e9ecef;
+        }
+        
+        .skill-list {
+            list-style-type: none;
+        }
+        
+        .skill-list li {
+            margin-bottom: 0.5rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .skill-list li::before {
+            content: '▹';
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            margin-top: 3rem;
+        }
+        
+        .contact-card {
+            background-color: var(--card-bg);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-form {
+            display: grid;
+            gap: 1.5rem;
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            margin-bottom: 0.5rem;
+            color: var(--text-color);
+            font-weight: 500;
+        }
+        
+        input, textarea {
+            padding: 0.75rem 1rem;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: var(--primary-color);
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            text-align: center;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 992px) {
+            .profile-card {
+                flex-direction: column;
+            }
+            
+            .profile-image, .profile-details {
+                min-height: auto;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                height: auto;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 1rem;
+                position: fixed;
+                bottom: 0;
+                top: auto;
+            }
+            
+            .sidebar-icon {
+                margin-bottom: 0;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding-bottom: 100px;
+                padding-top: 1rem;
+            }
+            
+            .services-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Sidebar Navigation -->
+    <div class="sidebar">
+        <a href="#home" class="sidebar-icon active">
+            <i class="fas fa-home"></i>
+        </a>
+        <a href="#about" class="sidebar-icon">
+            <i class="fas fa-user"></i>
+        </a>
+        <a href="#education" class="sidebar-icon">
+            <i class="fas fa-graduation-cap"></i>
+        </a>
+        <a href="#skills" class="sidebar-icon">
+            <i class="fas fa-code"></i>
+        </a>
+        <a href="#projects" class="sidebar-icon">
+            <i class="fas fa-laptop-code"></i>
+        </a>
+        <a href="#contact" class="sidebar-icon">
+            <i class="fas fa-envelope"></i>
+        </a>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content">
+        <section id="home">
+            <!-- Profile Card -->
+            <div class="profile-card">
+                <div class="profile-image">
+                    <img src="/api/placeholder/400/400" alt="Student Profile" />
+                    <h1 class="profile-name">Computer Science Student</h1>
+                    <p class="profile-title">Aspiring Technologist</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="profile-details">
+                    <h2 class="section-title">About Me</h2>
+                    <p>Hello! I'm an aspiring computer science student passionate about technology and innovation. With a strong academic background and leadership experience, I'm determined to make a meaningful impact in the tech world. My journey has been marked by consistent academic excellence and active participation in extracurricular activities that have shaped my understanding of technology and its applications.</p>
+                    <p>I'm particularly fascinated by artificial intelligence, game development, and software engineering. When I'm not studying or working on projects, I enjoy exploring new programming languages and keeping up with the latest technological advancements. My goal is to pursue computer science at a prestigious university where I can further develop my skills and contribute to groundbreaking innovations.</p>
+                    
+                    <div class="info-rows" style="margin-top: 2rem;">
+                        <div class="info-row">
+                            <span class="info-label">Status</span>
+                            <span>Senior High School Student</span>
+                            <span class="available-status">
+                                <span style="background-color: #FF8C42; width: 10px; height: 10px; border-radius: 50%; margin-right: 0.5rem;"></span>
+                            </span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Education</span>
+                            <span>12th Grade</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Interests</span>
+                            <span>Computer Science, AI, Game Development</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Location</span>
+                            <span>India</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- My Services/Skills Section -->
+            <div class="services-section">
+                <h2 class="section-title">My Skills</h2>
+                <div class="services-container">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="service-title">Web Development</h3>
+                        <p>Experience with HTML and currently expanding my knowledge of JavaScript to create modern, responsive websites. I'm passionate about learning both frontend and backend technologies to build comprehensive web applications that provide exceptional user experiences.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-gamepad"></i>
+                        </div>
+                        <h3 class="service-title">Game Development</h3>
+                        <p>Designing and developing interactive gaming experiences using GDevelop and exploring other game engines. I'm interested in creating engaging gameplay mechanics and immersive virtual worlds that combine creative storytelling with technical innovation. My goal is to develop games that are both entertaining and educational.</p>
+                    </div>
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3 class="service-title">Leadership</h3>
+                        <p>Demonstrated leadership abilities as School Pupil Leader and in various club officer positions. I excel at motivating teams, resolving conflicts, and organizing events that bring communities together. These experiences have taught me valuable skills in delegation, time management, and effective communication that I apply to all aspects of my academic and personal projects.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="education" class="education-section">
+            <h2 class="section-title">Education</h2>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <p class="timeline-date">2025 - 2026</p>
+                    <h3 class="timeline-title">12th Grade - Karnataka Board</h3>
+                    <p>Currently pursuing 12th grade education under the Karnataka State Board curriculum, maintaining strong academic performance while preparing for university applications.</p>
+                </div>
+                <div class="timeline-item">
+                    <p class="timeline-date">2024 - 2025</p>
+                    <h3 class="timeline-title">11th Grade - Karnataka Board</h3>
+                    <p>Scored 91.5% in 11th grade examinations. Successfully adapted to a new state board curriculum while maintaining excellent academic performance.</p>
+                </div>
+                <div class="timeline-item">
+                    <p class="timeline-date">2023 - 2024</p>
+                    <h3 class="timeline-title">10th Grade - CBSE</h3>
+                    <p>Achieved 91.6% in 10th grade CBSE board examinations. Consistently performed in the top percentile of the class.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="skills" class="skills-section">
+            <h2 class="section-title">Skills</h2>
+            <div class="skills-container">
+                <div class="skill-category">
+                    <h3>Technical Skills</h3>
+                    <ul class="skill-list">
+                        <li>HTML</li>
+                        <li>JavaScript (in progress)</li>
+                        <li>CS Fundamentals (via CS50)</li>
+                        <li>App Development (using GDevelop)</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Languages</h3>
+                    <ul class="skill-list">
+                        <li>English (fluent)</li>
+                        <li>Kannada (fluent)</li>
+                        <li>Hindi (basic)</li>
+                    </ul>
+                </div>
+                <div class="skill-category">
+                    <h3>Soft Skills</h3>
+                    <ul class="skill-list">
+                        <li>Leadership</li>
+                        <li>Teamwork</li>
+                        <li>Time Management</li>
+                        <li>Public Speaking</li>
+                        <li>Problem Solving</li>
+                        <li>Adaptability</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+        
+        <section id="projects" style="margin-top: 3rem;">
+            <h2 class="section-title">Projects & Certifications</h2>
+            <div class="services-container">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3 class="service-title">CS50: Introduction to Computer Science</h3>
+                    <p>Currently undertaking Harvard University's renowned CS50 introduction to computer science course. This comprehensive program is helping me build a strong foundation in programming concepts, algorithms, data structures, and software engineering principles. The practical assignments and projects are enhancing my problem-solving abilities and coding skills across multiple programming languages.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fab fa-js"></i>
+                    </div>
+                    <h3 class="service-title">JavaScript Certification</h3>
+                    <p>Expanding my programming knowledge through a comprehensive JavaScript certification course. This program covers essential web development concepts including DOM manipulation, asynchronous programming, and modern JavaScript frameworks. By the end of this certification, I aim to build interactive web applications with clean, efficient code that delivers exceptional user experiences across different devices and platforms.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3 class="service-title">ForgeAI (Planned)</h3>
+                    <p>An innovative productivity application leveraging artificial intelligence to help students manage their study schedules and optimize learning. This project aims to analyze individual learning patterns and preferences to create personalized study plans that maximize retention and understanding. Features will include smart reminders, adaptive quizzing, and progress tracking to support students in achieving their academic goals efficiently.</p>
+                </div>
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-gamepad"></i>
+                    </div>
+                    <h3 class="service-title">Survival Game (Planned)</h3>
+                    <p>A game development project using modern game engines to create an immersive survival experience. This project will incorporate realistic resource management, environmental challenges, and strategic gameplay mechanics. I'm planning to implement procedurally generated worlds, dynamic weather systems, and an engaging narrative to create a truly immersive gaming experience.</p>
+                </div>
+            </div>
+        </section>
+        
+        <section id="contact" class="contact-section">
+            <h2 class="section-title">Contact Me</h2>
+            <div class="contact-card">
+                <p style="margin-bottom: 2rem;">I'm currently seeking opportunities for higher education in computer science at top global universities. Please feel free to reach out if you have any questions or would like to connect.</p>
+                
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" name="message" rows="5" required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+        </section>
+        
+        <footer>
+            <p>&copy; 2025 Student Portfolio. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                // Remove active class from all sidebar icons
+                document.querySelectorAll('.sidebar-icon').forEach(icon => {
+                    icon.classList.remove('active');
+                });
+                
+                // Add active class to clicked icon
+                this.classList.add('active');
+                
+                // Scroll to the section
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Form submission placeholder
+        document.querySelector('.contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Thank you for your message! This is a demo form. On a live site, this would send your message to the site owner.');
+        });
+        
+        // Add active class to sidebar icon when scrolling to corresponding section
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - sectionHeight/3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.sidebar-icon').forEach(icon => {
+                icon.classList.remove('active');
+                if (icon.getAttribute('href') === `#${current}`) {
+                    icon.classList.add('active');
+                }
+            });
+        });
+    </script>
+</body>
+  </html>
