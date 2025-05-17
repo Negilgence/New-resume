@@ -496,6 +496,29 @@
             background-color: var(--secondary-color);
         }
         
+        /* Notification Styles */
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4BB543;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateX(110%);
+            transition: transform 0.3s ease;
+            z-index: 1001;
+        }
+        
+        .notification.show {
+            transform: translateX(0);
+        }
+        
+        .notification.error {
+            background-color: #FF3333;
+        }
+        
         /* Mobile Responsiveness */
         @media (max-width: 992px) {
             .profile-card {
@@ -573,6 +596,11 @@
             <p>I currently don't have an Instagram account. Feel free to connect with me on Twitter or LinkedIn!</p>
             <div class="close-modal" onclick="closeModal()">Close</div>
         </div>
+    </div>
+    
+    <!-- Notification -->
+    <div id="notification" class="notification">
+        <p id="notificationMessage">Message sent successfully!</p>
     </div>
     
     <!-- Main Content -->
@@ -751,7 +779,7 @@
             <div class="contact-card">
                 <p style="margin-bottom: 2rem;">I'm currently seeking opportunities for higher education in computer science at top global universities. Please feel free to reach out if you have any questions or would like to connect.</p>
                 
-                <form class="contact-form">
+                <form id="contactForm" class="contact-form">
                     <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" id="name" name="name" required>
@@ -764,7 +792,7 @@
                         <label for="message">Message</label>
                         <textarea id="message" name="message" rows="5" required></textarea>
                     </div>
-                    <button type="submit">Send Message</button>
+                    <button type="submit" id="submitButton">Send Message</button>
                 </form>
             </div>
         </section>
@@ -815,24 +843,4 @@
             });
         });
         
-        // Form submission placeholder
-        document.querySelector('.contact-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-            alert('Thank you for your message!');
-        });
-        
-        // Add active class to sidebar icon when scrolling to corresponding section
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('section');
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
-                if (pageYOffset >= (sectionTop - sectionHeight/3)) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            document.querySelectorAll('.sidebar-icon').forEach(icon => {
-                icon.
+        //
